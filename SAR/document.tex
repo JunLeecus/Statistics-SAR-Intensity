@@ -1,0 +1,110 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lachaise Assignment
+% LaTeX Template
+% Version 1.0 (26/6/2018)
+%
+% This template originates from:
+% http://www.LaTeXTemplates.com
+%
+% Authors:
+% Marion Lachaise & François Févotte
+% Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\input{structure.tex} % Include the file specifying the document structure and custom commands
+
+%----------------------------------------------------------------------------------------
+%	ASSIGNMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Operational Statistics for SAR Imagery Course Assignment} % Title of the assignment
+
+\author{jun li\\ \texttt{19171213765}} % Author name and email address
+
+\date{Xidian University --- \today} % University, school and/or department name(s) and a date
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	%----------------------------------------------------------------------------------------
+	%	INTRODUCTION
+	%----------------------------------------------------------------------------------------
+	
+	\section*{Basic model function} % Unnumbered section
+	\par During the class, we first studied several deferent probability distributions which is used to fitting SAR image statistical model.  We try to draw the distribution of Exponential. The function is:
+	% Math equation/formula
+	\begin{equation}
+	\mathop {f(x)=\frac{1}{\theta} e^\frac{-x}{\theta}}
+	\end{equation}
+	\par I used ggplot2 to draw this equation and then I converted that to log10. The plot is shown as Figure 1.
+	\begin{figure}[h] % [h] forces the figure to be output where it is defined in the code (it suppresses floating)
+		\centering
+		\includegraphics[width=2in]{picture/exp_dens.png} % Example image
+		\includegraphics[width=2in]{picture/exp_dens_log.png}
+		\caption{Exponential distribution(left) and Exponential distribution in log10(right)}
+	\end{figure}
+	\par Except this, we plot the distribution of Gamma. Function is:
+	\begin{equation}
+	\mathop {f(x,\beta,\alpha)=\frac{\beta^\alpha}{\Gamma ( \alpha ) } x^{\alpha-1} e^{-\beta x}}
+	\end{equation}
+	\par Then I used ggplot2 to draw this equation and then I converted that to log10, too. The plot is shown as Figure 2.
+	\begin{figure}[h] % [h] forces the figure to be output where it is defined in the code (it suppresses floating)
+		\centering
+		\includegraphics[width=2in]{picture/gamma_dis.png} % Example image
+		\includegraphics[width=2in]{picture/gamma_log.png}
+		\caption{Gamma distribution(left) and Gamma distribution in log10(right)}
+	\end{figure}
+    
+    \par Besides plot them by ggplot2. All of these function were first drawing by my usual tool MATLAB. And the figures are not showing here.
+	
+	\section*{ SAR Image Analysis} % Numbered section
+	According to the assignment, I've taken a portion of the image from figure 3.4, which is in the lower left corner showing the forest.  The original image and the captured image are shown below: 
+	
+	\begin{figure}[h] % [h] forces the figure to be output where it is defined in the code (it suppresses floating)
+		\centering
+		\includegraphics[width=4in]{picture/oripic.png} % Example image
+		\includegraphics[width=2in]{picture/pic.jpg}
+		\caption{Original image(left) and Captured image(right)}
+	\end{figure}
+	
+	\par For the captured image, I use function 'hist'  to process it to be Gray histogram as Figure 4.
+	
+	\begin{figure}[h] % [h] forces the figure to be output where it is defined in the code (it suppresses floating)
+		\centering
+		\includegraphics[width=4in]{picture/hist.png} % Example image
+		\caption{Gray histogram}
+	\end{figure}
+	
+    \par After gathering the gray histogram, I try to modeling, in other words fitting, the histogram using the aforementioned function. It's obvious that the histogram is following the Gamma distribution. So I selected several different parameters to change the lines' shape in order to fitting the results. I compared the line's fitting outcom with the shape parameter being 3 and the scale parameter being 1/7, 1/8 and 1/9, respective. But in doing this, some problem occured. The maximum value of the histogram is nearly 40 and the fluctuations in the curve are very small and almost invisible because the top value of curve is just about 5 which is small in contrast to the histogram value. To solve this problem, I normalized the histogram but in this circumstance, the curve fit well in the high-light region and fit terriblly in the dark region. At last, I was inspired by my roommate who normalized the histogram to a larger number instead of to 1. By means of this tip, I successfully achieved the analyses. 
+    
+    \begin{figure}[h] % [h] forces the figure to be output where it is defined in the code (it suppresses floating)
+    	\centering
+    	\includegraphics[width=4in]{picture/Rplot.png} % Example image
+    	\caption{ Final results}
+    \end{figure}
+
+    \begin{warn}[Codes:]
+    	The code to process the image is in the file ' SARexc.R '.
+    \end{warn}
+	% File contents
+
+\end{document}
+
+
+
+
+
+
